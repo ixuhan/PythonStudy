@@ -157,3 +157,207 @@ class person(object): #定义一个person对象，继承于object
         print (age,'岁的',sex,name,'说：Hello')
 p = person
 p.sayHello()
+
+class laugth(object):
+    active = 'haha'
+    def showLaugth(self):
+        for i in range(2):
+            print (self.active)#用self.attr取得属性
+    def __init__(self): #构造函数，在建立对象的时候自动调用
+        print ('init!',self.active)
+me = laugth()
+me.active = 'hehe'
+me.showLaugth()
+
+class cry(laugth): #继承了laugth
+    __whyCry = 'loser' #两个下划线开头的函数是私有的
+    cryVoice = 'wawawa'
+    def __init__(self):
+        print ('i need for cay')
+    def __init__(self,say): #有参构造函数
+        print ('i am the anther world',say)
+    def beginCry(self):
+        for i in range(3):
+            print (self.cryVoice)
+    def changeCryVoice(self,newVoice):
+        self.cryVoice = newVoice
+    def __showWhy(self): #两个下划线开头的函数是私有的
+        print (self.whyCry)
+    def showPrivate(self):
+        print (self.__whyCry)
+#you = cry() 同时有无参和有参构造函数时，无法调用无参构造
+you = cry('i want you')
+you.beginCry()
+you.changeCryVoice('wuwuwu')
+you.beginCry()
+you.showLaugth() #继承后拥有父类所有的属性和方法
+you.active = 'lalala'
+you.showLaugth()
+you.__whyCry = 'happy' #尝试修改私有属性
+you.whyCry = 'happy'
+you.showPrivate() #打印的是loser，修改失败
+
+print (dir(list)) #查询一个类的所有属性
+print (dir(cry))
+print (help(list))
+
+a = [1,2,3]
+b = a    #用=拷贝后a改变b会改变
+c = a[:] #用[:]拷贝后a改变c不会改变
+a[2] = 1
+print (a)
+print (b)
+print (c)
+
+print ([1,2] + [3,4])
+#print ([1,2] - [3,4]) #因为list里面没有sub减法
+#尝试给list添加减法
+class strongList(list):
+    def __sub__(self,b): #self相当于减法的被减数，b是减数
+        a = self[:] #拷贝
+        for i in self:
+            if i in b:
+                a.remove(i)
+        return a
+print (strongList([1,2,3,5,4,4,7]) - strongList([3,4])) #添加减法后成功
+
+dic = {'name':'hank','age':'21','sex':'boy'} #构建一个词典，类似于map
+print (type(dic))
+print (dic['name']) #输出value
+print (dic)
+dic['glasses'] = 'true'
+if dic['glasses'] == 'true':
+    print ('四眼仔')
+for key in dic: #手动遍历词典
+    print(key,dic[key])
+print (dic.keys()) #系统函数，返回所有的key值
+print (dic.values()) #系统函数，返回所有的value值
+print (dic.items()) #系统函数，返回所有的键值对
+del dic['glasses'] #删除字典的key
+print (dic.items())
+print (len(dic))
+
+#文件操作
+f = open('1.txt','a')
+#lines = f.readlines()
+#for i in lines:
+#    print(i,end='')
+for i in dic.keys():
+    f.write(i+'：'+dic[i]+'\n')
+f.close()
+print ('come')
+
+def add(a,b,c):
+    return a+b+c
+print(add(1,2,3))#直接按顺序传递参数
+print(add(a=2,c=1,b=3))#也可以用名称制定参数，类似mybatis
+def pri(a=0,b=0,c=0):#在函数上可以指定参数的默认值
+    print ('a=',a,',b=',b,',c=',c,end='')
+print(pri(1,2,3))
+print(pri())#有默认值
+
+def numpri(*num): # 一个*号，代表未知个数的参数，打包成为tuple
+    print(type(num))
+    for i in num:
+        print (i,',',end='')
+numpri(1,1,2,3,4)
+def numpri2(**num):# 两个*号，同样代表未知个数的参数，打包成为dict
+    print(type(num))
+    for i in num.keys():
+        print (i,',',end='')
+numpri2(i='1',j='2',k='3')#传递时，按字典的格式
+#为了方便
+num=(1,2,3,4)#先打包
+numpri(*num)#一起传递过去，但是一定要加上*号
+num={'i':'1','j':'2'}
+numpri2(**num)
+
+#python循环
+S = 'Administrator'
+for i in S:
+    print (i,end='')
+for i in range(0,len(S),2):#beain,end,step
+    print (S[i])
+for (index,char) in enumerate(S):#取出来变成词典
+    print(index,char)
+ta = [1,2,3]
+tb = [4,5,6]
+tc = ['a','b','c']
+for (a,b,c) in zip(ta,tb,tc):#zip
+    print (a,b,c)
+
+#lambda
+func = lambda x,y:x+y #相当于x,y参数 返回x+y
+print (func(3,4))
+func = lambda f,a,b:print('test')
+print (func(1,2,3))
+
+def test(f,a,b): #f参数应该传递一个函数
+    print('test')
+    print(f(a,b))
+print(test((lambda x,y:x**2+y),6,9))#传递lambda函数
+
+re = map((lambda x,y,z:x+y+z),[1,3,5],[1,3,5],[1,3,5]) #map函数就是把前面的lambda函数作用在后面的list中
+for i in list(re):#map第一个参数lambda表达式，把后面的list（n）带入
+    print (i)
+    
+def func(a):
+    if a > 10:
+        print ('>10')
+    elif a < 10:
+        print ('<10')
+    else:
+        print ('=10')
+print (list(filter(func,[1,10,15,20,50,100]))) #filter 让后面的值分别作用前面的函数
+
+re = iter(range(5))
+try:
+    for i in range(5):
+        print (re.next())
+except AttributeError:
+    print ('AttributeError')
+print ('HaHaHaHa')
+
+func = lambda :print('lambda test')
+func()
+
+help(1) #查看int object的方法
+print (1+2) #实际执行了(1.__add__(2))
+
+f = open('1.txt','a')
+print (f.closed)
+f.close()
+print (f.closed)
+
+with open('1.txt','a') as f:#用with...as打开资源管理器，离开时自动关闭f
+    print(f.close)
+    help(f)#实际上f有__enter__和__exit__在进入和退出时调用
+    dir(f)
+print (f.closed)
+
+#重写__enter__和__exit__方法测试
+class stu(object):
+    def __init__(self,text):
+        self.text = text
+    def __enter__(self):#重写enter方法，必须返回self
+        print('enter')
+        return self
+    def __exit__(self,exc_type,exc_value,traceback):#重写exit方法，必须有4个参数
+        print('exit')
+with stu('hello') as f:
+    print (f.text)
+class test(object):
+    def say(self,word):
+        return 'hello,'+ word
+print (test().say('nihao'))
+
+def test():
+    def say(self,word):
+        return 'hello'+word
+
+flist = [1,2,3]
+print(flist)
+for i in range(len(flist)):
+    flist[i] += 1
+print(flist)
+
