@@ -1,0 +1,33 @@
+#二分查找
+def binSearch( n,a):
+    lo = 0
+    hi = int(len(a) - 1)
+    while(lo <= hi):
+        mid = int((lo + hi) / 2)
+        if n < a[mid]:   hi = mid - 1
+        elif n > a[mid]: lo = mid + 1
+        else: return mid
+    return -1
+
+#选择排序，缺点：如果已经有序，仍然要做N^2/2次比较
+def chooseSort(a):
+    for i,val in enumerate(a):
+        min = i
+        for j in range(i+1,len(a)):
+            if a[min] > a[j]: #找到最小位置的下标
+                min = j
+        a[i],a[min] = a[min],a[i] #交换首位和最小位
+    for i,val in enumerate(a): #打印结果数组
+        print (val,' ',end='')
+
+#插入排序
+def insertSort(a):
+    for i,val in enumerate(a):
+        for j in range(i,0,-1): #由于前面已经有序，则只需要冒泡一次
+            if a[j] < a[j - 1]:
+                a[j],a[j-1] = a[j-1],a[j]
+    for i,val in enumerate(a): #打印结果数组
+        print (val,' ',end='')
+
+
+insertSort([1,5,3,6,5,4,7,8,9,2])
