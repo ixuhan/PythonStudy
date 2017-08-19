@@ -27,17 +27,35 @@ def insertSort(a):
         for j in range(i,0,-1): #由于前面已经有序，则只需要冒泡一次
             if a[j] < a[j - 1]:
                 a[j],a[j-1] = a[j-1],a[j]
+            else:
+                break
 
 #希尔排序
 def shellSort(a):
     gap = len(a) // 2 #希尔的分组值
     while gap != 0:
-        for i in range(gap):
-            for j in range(i + gap,len(a) - gap,gap):
-                if a[j] < a[j + gap]:
-                    a[j],a[j+gap] = a[j+gap],a[j]
+        for i in range(gap,len(a)):
+            for k in range(i,gap,-gap):
+                if a[k] < a[k - gap]:
+                    a[k],a[k-gap] = a[k-gap],a[k]
         gap //= 2
 
+#冒泡排序
+def bubbSort(a):
+    step = 0
+    record = 0
+    for i in range(len(a)):
+        isSort = True
+        for j in range(len(a)-i-1):
+            if a[j] < a[j+1]:
+                a[j],a[j+1] = a[j+1],a[j]
+                isSort = False
+                #record = j #记录最后一次交换的位置
+            step += 1
+        if isSort:
+            break
+    print(step)
+num1 = [1,5,15,21,23,23,41,47,51,54]
 num = [1,5,3,6,5,4,7,8,9,2]
-shellSort(num)
-print(num)
+bubbSort(num1)
+print(num1)
