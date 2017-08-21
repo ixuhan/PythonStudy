@@ -1,4 +1,4 @@
-# 选择排序，缺点：如果已经有序，仍然要做N^2/2次比较
+# 选择排序
 def chooseSort(a):
     for i, val in enumerate(a):
         min = i
@@ -46,7 +46,7 @@ def bubbSort(a):
 
 
 # 归并排序
-class mergeSortUtil(object):
+class MergeSortUtil(object):
     # 第一个数组是first-mid 第二个数组是mid+1-temp
     def mergeSort(self, a, first, mid, last, temp):
         i = first
@@ -103,6 +103,12 @@ def quickSort(a, left, right):
     a[base], a[pointR] = a[pointR], a[base]
     quickSort(a, left, pointR - 1)  # 左边排序
     quickSort(a, pointR + 1, right)  # 右边排序
+
+
+# 堆排序
+class HeapSortUtil(object):
+    def builtHeap(self, a):  # 建立堆
+        for i,val in enumerate(a):
 
 
 num = [1, 5, 3, 6, 5, 4, 7, 8, 9, 2]
